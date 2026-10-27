@@ -31,6 +31,13 @@ try {
   const contents = run('tar', ['-tzf', archive])
   assert(!contents.includes('deployments/'), 'No operator deployment in the plugin')
   assert(!contents.includes('/node_modules/.pnpm/'), 'No checkout symlink graph in the plugin')
+  const archivePaths = contents.trim().split(/\r?\n/u)
+  assert(!archivePaths.some(path => path.endsWith('.tsbuildinfo')), 'No TypeScript build cache in the plugin')
+  assert(!archivePaths.some(path => path.endsWith('.node')), 'No platform-specific native addon in the plugin')
+  assert(!archivePaths.some(path => /^package\/node_modules\/[^/]+\/(?:test|tests|example|examples|bench|benchmark|benchmarks)\//u.test(path)), 'No dependency development fixtures in the plugin')
+  for (const name of ['ssh2', 'asn1', 'bcrypt-pbkdf', 'safer-buffer', 'tweetnacl']) {
+    assert(archivePaths.includes(`package/node_modules/${name}/LICENSE`), `${name} license must remain in the plugin`)
+  }
   // A harmless pre-existing dependency exercises profile preservation without
   // introducing a provider or account into the test.
   run(process.execPath, [cli, 'plugin', '--profile', 'web', 'add', 'is-number@7.0.0'])

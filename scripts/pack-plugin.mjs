@@ -79,7 +79,7 @@ try {
     // npm's own file selection honors each package's files allowlist.
     const [packed] = JSON.parse(run('npm', ['pack', '--dry-run', '--ignore-scripts', '--json'], entry.path))
     for (const file of packed.files) {
-      if (file.path === 'package.json') continue
+      if (file.path === 'package.json' || file.path.endsWith('.tsbuildinfo')) continue
       await mkdir(dirname(join(target, file.path)), { recursive: true })
       await cp(join(entry.path, file.path), join(target, file.path))
     }
@@ -99,7 +99,9 @@ try {
     await mkdir(target, { recursive: true })
     const [packed] = JSON.parse(run('npm', ['pack', '--dry-run', '--ignore-scripts', '--json'], entry.path))
     for (const file of packed.files) {
-      if (file.path === 'package.json' || file.path.endsWith('.node') || file.path.split('/').includes('build')) continue
+      const segments = file.path.split('/')
+      if (file.path === 'package.json' || file.path.endsWith('.node') || file.path.endsWith('.tsbuildinfo')
+        || segments.some(segment => ['build', 'test', 'tests', 'example', 'examples', 'bench', 'benchmark', 'benchmarks'].includes(segment))) continue
       await mkdir(dirname(join(target, file.path)), { recursive: true })
       await cp(join(entry.path, file.path), join(target, file.path))
     }

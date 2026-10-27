@@ -2,11 +2,11 @@
 
 [README](README.md) · [中文 README](README.zh-CN.md)
 
-This branch targets **DeepSeek Harness 0.2.1-rc.3** and the DSH-SLOP **0.0.15 release candidate**. It has not been published. Other Harness versions have not been verified. SLOP adds Machine, Knowledge and Queue to your existing Harness; keep your current model provider and account.
+The DSH-SLOP **0.0.15 public preview** targets **DeepSeek Harness 0.2.1-rc.3** exactly. Other Harness versions have not been verified. SLOP adds Machine, Knowledge and Queue to your existing Harness; keep your current model provider and account.
 
 ## Get the installation package
 
-Build the candidate [from source](#build-the-installation-package). The commands below use `0.0.15`. After the first public release, download its `.tgz` and `.sha256` assets and compare the checksum with `shasum -a 256 -c dsh-slop-<version>.tgz.sha256`.
+Download `dsh-slop-0.0.15.tgz` and `dsh-slop-0.0.15.tgz.sha256` from [v0.0.15](https://github.com/zrzrv5/dsh-slop/releases/tag/v0.0.15). In the download directory, verify them with `shasum -a 256 -c dsh-slop-0.0.15.tgz.sha256`. You can also [build from source](#build-the-installation-package).
 
 Keep the `.tgz` file compressed. If you download a GitHub Actions artifact as a `.zip`, unzip that outer file to get the `.tgz` inside.
 

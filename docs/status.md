@@ -1,13 +1,13 @@
 # Status
 
-This source snapshot prepares DSH-SLOP **0.0.15** for DeepSeek Harness **0.2.1-rc.3**. It is not a published release. Documentation review and the first public release remain pending. Earlier observations below are historical evidence, not repeat validation of this candidate.
+DSH-SLOP **0.0.15** is the first public preview for DeepSeek Harness **0.2.1-rc.3** exactly. Source and package checks pass; the full real-system gates remain pending. Earlier real-system observations below are historical evidence, not repeat validation of this release.
 
 ## What was checked
 
 | Level | What it covers | Result |
 | --- | --- | --- |
-| Automated tests | Unit tests, local SSH and SFTP protocol fixtures (key, agent, password plus verification code, host-key changes, transfer limits), Slurm and PBS output parsing, Queue scheduling and delivery, Knowledge path and digest rules. Run with `pnpm check`. | At 0.0.4 on Windows with Node 24: 90 test files, 558 tests passed, 7 skipped. CI runs the same checks. |
-| Installed plugin | `pnpm plugin:smoke` installs the `.tgz` into a temporary Harness profile, loads it, checks settings and the Machine event connection, removes it, and confirms the data remains. It makes no model call and no remote connection. | Passes. Earlier release archives were also installed through the RC2 desktop App on macOS and Windows, where all components started and the DSH-SLOP settings section and its tabs loaded after the documented restart. |
+| Automated tests | Unit tests, local SSH and SFTP protocol fixtures (key, agent, password plus verification code, host-key changes, transfer limits), Slurm and PBS output parsing, Queue scheduling and delivery, Knowledge path and digest rules. Run with `pnpm check`. | The initial public snapshot passed on macOS (98 files, 617 tests passed, 5 skipped), and [Windows and Ubuntu CI](https://github.com/zrzrv5/dsh-slop/actions/workflows/ci.yml) passed with Node 24. Release preparation repeats package checks after packaging changes. |
+| Installed plugin | `pnpm plugin:smoke` installs the `.tgz` into a temporary Harness profile, loads it, checks settings and the Machine event connection, removes it, and confirms the data remains. It makes no model call and no remote connection. | Passed in Windows and Ubuntu CI. Earlier desktop App observations on macOS and Windows are historical; they do not replace a fresh real-cluster login journey. |
 | Real systems | Observed by the author on their own computers and clusters, not as a repeatable test suite. | See below. |
 
 Real-system observations:
@@ -26,7 +26,7 @@ These steps have no completed real-system evidence. Plan to try them yourself:
 - **Queue recovery on real systems.** Stopped-Chat activation and packed checks across local and remote items.
 - **Windows against a real remote host.** Native SSH was verified against local fixtures and the Windows named-pipe agent. Real remote login and VPN routing were not.
 - **A named Cloudflare Tunnel on your own account.** The browser-guided setup was not exercised end to end.
-- **Other Harness versions.** This candidate targets exactly 0.2.1-rc.3. Do not bypass its compatibility check.
+- **Other Harness versions.** This release targets exactly 0.2.1-rc.3. Do not bypass its compatibility check.
 
 ## Known limits
 

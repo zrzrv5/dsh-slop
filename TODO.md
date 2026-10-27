@@ -1,13 +1,14 @@
 # TODO
 
-## First public release
+## Stable release acceptance
 
-- [ ] Complete the maintainer's document review, including README translations, installation instructions, product contracts and status claims.
-- [ ] Review licensing, third-party notices and candidate contents before publication.
-- [ ] Complete the pending real-system evidence in `requirements/traceability.yml`; local tests do not satisfy these gates.
-- [ ] Confirm the candidate version and supported Harness release before creating the first commit or release.
-- [ ] Publish only after explicit maintainer authorization.
-- [ ] After publication, add the repository description and plugin topic, upload the installation archive and checksum, and update download instructions.
+- [ ] Complete the pending real-system evidence in `requirements/traceability.yml`: the full real Chat login journey and local/remote Queue recovery. Local tests and preview publication do not satisfy these gates.
+
+## Future releases
+
+- Review documentation, licensing, third-party notices, the version and exact Harness pin before publishing.
+- Prepare an immutable release as a draft, attach and verify the installation archive and checksum, then publish.
+- Keep download instructions and the supported-version table aligned with the release.
 
 ## Product follow-ups
 

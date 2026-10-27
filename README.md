@@ -34,7 +34,7 @@ Each component can be enabled or disabled in Plugin Manager. Queue still tracks 
 
 ### 1. Install
 
-[Build the installation package from source](INSTALL.md#build-the-installation-package). Release downloads will be added after the first public release. Do not unpack the generated `.tgz`.
+Download `dsh-slop-0.0.15.tgz` and its `.sha256` file from [v0.0.15](https://github.com/zrzrv5/dsh-slop/releases/tag/v0.0.15), or [build from source](INSTALL.md#build-the-installation-package). Do not unpack the `.tgz`.
 
 - **Desktop App:** **Plugins → Add plugin**, paste the file's absolute path, **Install**, **Enable now**. If a component still shows *Not running*, quit and reopen Harness once.
 - **Command line:**

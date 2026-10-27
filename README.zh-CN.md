@@ -34,7 +34,7 @@ DSH-SLOP 希望解决这些问题。（当然，如果 `tmux` 和 `claude rc` �
 
 ### 1. 安装
 
-先[从源码构建安装包](INSTALL.md#build-the-installation-package)。首个公开版本发布后再提供下载。不要解压生成的 `.tgz`。
+从 [v0.0.15](https://github.com/zrzrv5/dsh-slop/releases/tag/v0.0.15) 下载 `dsh-slop-0.0.15.tgz` 和对应的 `.sha256` 文件，也可以[从源码构建](INSTALL.md#build-the-installation-package)。不要解压 `.tgz`。
 
 - **桌面 App：** **Plugins → Add plugin**，粘贴文件的绝对路径，依次选择 **Install**、**Enable now**。如果仍有组件显示 *Not running*，完全退出并重新打开 Harness 一次。
 - **命令行：**
