@@ -1,0 +1,25 @@
+name: specs
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check whitespace
+        run: git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD
+      - name: Check relative Markdown links
+        run: |
+          ruby -e 'Dir.glob("**/*.md").each { |file| File.read(file).scan(/\]\(([^)#]+)(?:#[^)]+)?\)/).flatten.each { |link| next if link.match?(%r{\A(?:https?://|/)}); target = File.join(File.dirname(file), link); abort "broken link #{file} -> #{link}" unless File.exist?(target) } }'
+      - name: Reject obvious committed credentials
+        run: |
+          if git grep -n -I -E 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{20,}|-----BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY-----'; then
+            exit 1
+          fi

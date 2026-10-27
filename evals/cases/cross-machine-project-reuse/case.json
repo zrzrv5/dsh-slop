@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "cross-machine-project-reuse",
+  "mode": "synthetic",
+  "prompt": "prompt.md",
+  "rubric": "rubric.md",
+  "reference": "reference.md",
+  "requiredComponents": ["machine", "queue", "knowledge"],
+  "traceRules": {
+    "requiredTools": [
+      "slop_machine_get",
+      "slop_queue_list",
+      "slop_knowledge_search",
+      "slop_knowledge_read"
+    ],
+    "forbiddenTools": ["slop_setup_machine", "slop_machine_info_set"],
+    "maxToolErrors": 0,
+    "maxPruneEvents": 0,
+    "maxDuplicateShellCalls": 0
+  },
+  "thresholds": {
+    "maxWallTimeMs": 120000,
+    "maxModelCalls": 8,
+    "maxPromptTokens": 120000,
+    "maxUncachedInputTokens": 30000,
+    "minPostFirstCacheHitRatio": 0.75
+  }
+}

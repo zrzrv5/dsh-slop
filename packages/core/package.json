@@ -1,0 +1,27 @@
+{
+  "name": "@dsh-slop/core",
+  "version": "0.0.1",
+  "description": "Machine inventory, Machine Info, access, and relational authority for DSH-SLOP",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown src/index.ts --format esm --dts --out-dir dist",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run tests"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@dsh-slop/machine",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "SSH connections, authentication, Machine Info, shell and file transfers.",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./locale/en.json": "./locale/en.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "locale"
+  ],
+  "scripts": {
+    "sync:client": "node ../../scripts/check-client-asset.mjs"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-commands",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-api-workspace-controller",
+        "@deepseek-ai/dsh-client-ui-workspace",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-tool",
+        "@dsh-slop/runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "dependencies": {
+    "@dsh-slop/plugin": "workspace:*",
+    "@dsh-slop/ui": "workspace:*",
+    "@dsh-slop/runtime-base": "workspace:*"
+  }
+}

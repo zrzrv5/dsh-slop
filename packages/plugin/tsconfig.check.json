@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "rootDir": "../..",
+    "baseUrl": "../..",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@dsh-slop/core": ["packages/core/src/index.ts"],
+      "@dsh-slop/execution": ["packages/execution/src/index.ts"],
+      "@dsh-slop/knowledge/settings-bridge": ["packages/knowledge/src/settings-bridge.ts"],
+      "@dsh-slop/knowledge": ["packages/knowledge/src/index.ts"],
+      "@dsh-slop/queue": ["packages/queue/src/index.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "../core/src/**/*.ts",
+    "../execution/src/**/*.ts",
+    "../knowledge/src/**/*.ts",
+    "../queue/src/**/*.ts"
+  ]
+}

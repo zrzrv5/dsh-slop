@@ -1,0 +1,38 @@
+{
+  "name": "@dsh-slop/launcher",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "dsh-slop": "dist/bin.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-assets.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run tests",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "yaml": "catalog:",
+    "@deepseek-ai/dsh-base": "0.2.1-rc.3",
+    "@deepseek-ai/dsh": "0.2.1-rc.3",
+    "@dsh-slop/bundle": "workspace:*",
+    "@deepseek-ai/cordis": "catalog:",
+    "@deepseek-ai/dsh-session": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-session-persistence": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-session-persistence-jsonl": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-session-format": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-agent-preset-registry": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-session-format-catalog": "0.2.1-rc.3",
+    "@dsh-slop/web-runtime": "workspace:*"
+  }
+}

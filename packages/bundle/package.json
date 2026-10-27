@@ -1,0 +1,35 @@
+{
+  "name": "@dsh-slop/bundle",
+  "version": "0.0.15",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./locale/en.json": "./locale/en.json"
+  },
+  "files": [
+    "cordis.patch.yml",
+    "locale"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-web-app": "0.2.1-rc.3",
+    "@dsh-slop/knowledge": "workspace:*",
+    "@dsh-slop/plugin": "workspace:*",
+    "@dsh-slop/ui": "workspace:*",
+    "@dsh-slop/machine": "workspace:*",
+    "@dsh-slop/queue-plugin": "workspace:*",
+    "@dsh-slop/queue-webhook": "workspace:*",
+    "@dsh-slop/runtime": "workspace:*",
+    "@dsh-slop/web-runtime": "workspace:*"
+  },
+  "description": "Machine, Knowledge, Queue and optional public callbacks.",
+  "engines": {
+    "dsh": "0.2.1-rc.3"
+  }
+}

@@ -1,0 +1,23 @@
+node_modules/
+dist/
+lib/
+coverage/
+.DS_Store
+*.tsbuildinfo
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.sqlite
+*.sqlite-*
+*.sock
+*.pid
+runtime/
+!packages/runtime/
+artifacts/
+.env
+.env.*
+!.env.example
+
+# Local review notes and operator state
+.local/

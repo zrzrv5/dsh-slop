@@ -1,0 +1,29 @@
+{
+  "name": "@dsh-slop/web-runtime",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./locale/en.json": "./locale/en.json",
+    "./ptc-memory.patch.yml": "./ptc-memory.patch.yml"
+  },
+  "files": [
+    "cordis.patch.yml",
+    "locale",
+    "ptc-memory.patch.yml"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-experimental-worktree": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-experimental-tool-worktree": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-plugin-market": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-client-ui-plugin-market": "0.2.1-rc.3"
+  },
+  "description": "Native Worktrees and plugin discovery for standalone DSH-SLOP."
+}

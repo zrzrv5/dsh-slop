@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Queue public callbacks",
+    "description": "Optional public callback receiver and managed Cloudflare connection. Requires Queue; polling remains independent."
+  }
+}

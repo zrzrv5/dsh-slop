@@ -1,0 +1,23 @@
+{
+  "name": "@dsh-slop/queue",
+  "version": "0.0.1",
+  "description": "Durable task ledger, adaptive monitoring, and targeted chat delivery for DSH-SLOP",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run tests"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  }
+}

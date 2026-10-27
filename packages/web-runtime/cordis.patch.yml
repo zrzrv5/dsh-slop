@@ -1,0 +1,11 @@
+# Standalone additions use upstream services and their native Plugin settings.
+# The Web App selects its own local or remote directory picker.
+- insert:
+    - id: worktree
+      name: '@deepseek-ai/dsh-experimental-worktree'
+    - id: tool-worktree
+      name: '@deepseek-ai/dsh-experimental-tool-worktree'
+    - id: plugin-market
+      name: '@deepseek-ai/dsh-plugin-market'
+    - id: ui-plugin-market
+      name: '@deepseek-ai/dsh-client-ui-plugin-market'

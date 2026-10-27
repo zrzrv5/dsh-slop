@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "id": "staged-knowledge-recall",
+  "mode": "synthetic",
+  "stages": [
+    {
+      "id": "recall",
+      "session": "fresh-recall",
+      "turn": 1,
+      "prompt": "recall.md",
+      "requiredComponents": [
+        "knowledge"
+      ],
+      "traceRules": {
+        "requiredTools": [
+          "slop_knowledge_search",
+          "slop_knowledge_read"
+        ],
+        "forbiddenTools": [
+          "slop_setup_machine",
+          "slop_machine_info_set",
+          "slop_machine_connect",
+          "slop_machine_get",
+          "slop_machine_shell",
+          "slop_queue_list",
+          "slop_queue_get",
+          "slop_queue_update",
+          "slop_queue_track",
+          "slop_knowledge_write"
+        ],
+        "maxToolErrors": 0,
+        "maxPruneEvents": 0,
+        "maxDuplicateShellCalls": 0
+      },
+      "thresholds": {
+        "maxWallTimeMs": 60000,
+        "maxModelCalls": 4,
+        "maxPromptTokens": 120000,
+        "maxUncachedInputTokens": 30000,
+        "minPostFirstCacheHitRatio": 0.75
+      }
+    }
+  ]
+}

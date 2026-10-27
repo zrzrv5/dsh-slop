@@ -1,0 +1,74 @@
+{
+  "name": "@dsh-slop/knowledge",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./settings-bridge": "./dist/settings-bridge.js",
+    "./client": "./dist/client.js",
+    "./locale/en.json": "./locale/en.json"
+  },
+  "files": [
+    "dist",
+    "locale"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "sync:client": "node ../../scripts/check-client-asset.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run tests"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis-plugin-loader": "1.0.6",
+    "@deepseek-ai/dsh-agent": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-llm": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-settings": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-tools": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-workspace": "0.2.1-rc.3",
+    "@deepseek-ai/schemastery": "3.18.5",
+    "yaml": "catalog:",
+    "@deepseek-ai/dsh-util-values": "0.2.1-rc.3",
+    "@dsh-slop/runtime-base": "workspace:*",
+    "zod": "catalog:",
+    "@deepseek-ai/dsh-host-webserver": "0.2.1-rc.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.5"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-app-boot": "0.2.1-rc.3",
+    "@deepseek-ai/dsh-config-editor": "0.2.1-rc.3",
+    "@deepseek-ai/cordis": "catalog:",
+    "@types/node": "22.20.0",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8",
+    "@deepseek-ai/cordis-plugin-loader": "1.0.6"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-commands",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-api-workspace-controller",
+        "@deepseek-ai/dsh-client-ui-workspace",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-tool",
+        "@dsh-slop/runtime"
+      ],
+      "platform": "web"
+    }
+  }
+}

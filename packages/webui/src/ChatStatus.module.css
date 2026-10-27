@@ -1,0 +1,74 @@
+.surface { box-sizing: border-box; color: var(--dsw-alias-label-primary); font-family: var(--dsw-font-family); font-size: 13px; line-height: 20px; }
+.surface *, .surface *::before, .surface *::after { box-sizing: border-box; }
+.surface :is(button, input, textarea, select) { font-family: inherit; font-size: inherit; line-height: inherit; }
+.surface :is(button, input, summary):focus-visible { outline: 2px solid var(--dsw-alias-state-business-primary); outline-offset: 2px; }
+.surface :is(code, pre) { font-family: var(--ds-font-family-code); }
+/* Compact Chat status. Header chips and composer Jobs never occupy transcript rows. */
+/* Keep popover controls above the conversation's invisible width handles. */
+.slop-chat-header-status { flex: none; min-width: 0; padding: 0 16px 2px; position: relative; z-index: 10; }
+.slop-chat-header-status:has(.slop-chat-machine-chips:empty), .slop-chat-header-status:empty { display: none; }
+.slop-chat-machine-chips { min-width: 0; position: relative; font-size: 13px; line-height: 20px; color: var(--dsw-alias-label-primary); }
+/* Keep the details outside the scrolling strip so overflow cannot clip them. */
+.slop-chat-machine-strip { display: flex; align-items: center; gap: 4px; min-width: 0; overflow-x: auto; overscroll-behavior-inline: contain; padding: 2px; scrollbar-width: thin; }
+.slop-chat-machine-strip > * { flex: none; white-space: nowrap; }
+.slop-chat-machine-strip button:focus-visible { outline-offset: 0; }
+.slop-chat-chip { display: inline-flex; flex: none; align-items: center; gap: 4px; min-height: 28px; border: 1px solid var(--dsw-alias-border-l2); border-radius: 16px; padding: 1px 7px; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); white-space: nowrap; cursor: pointer; }
+.slop-chat-chip small { color: var(--dsw-alias-label-secondary); font-size: inherit; }
+.slop-chat-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+.slop-machine-icon { flex: none; color: var(--dsw-alias-label-tertiary); }
+.slop-chat-green { color: var(--dsw-alias-state-success-primary); }
+.slop-chat-yellow { color: var(--dsw-alias-state-warn-label); }
+.slop-chat-red { color: var(--dsw-alias-state-error-primary); }
+.slop-chat-neutral { color: var(--dsw-alias-label-secondary); }
+.slop-chat-popover { position: absolute; top: calc(100% + 6px); left: 0; width: min(400px, 100%); z-index: 30; border: 1px solid var(--dsw-alias-border-l2); border-radius: 10px; padding: 10px 12px; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); box-shadow: var(--dsw-shadow-lv3); font-size: 13px; line-height: 20px; max-height: min(440px, 60vh); overflow: auto; overflow-wrap: anywhere; }
+.slop-chat-popover header, .slop-remote-shell header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.slop-chat-popover header button { border: 0; background: transparent; color: inherit; padding: 4px 8px; cursor: pointer; }
+.slop-chat-popover p { margin: 8px 0; }
+.slop-chat-popover small { display: block; color: var(--dsw-alias-label-secondary); }
+.slop-chat-jobs { min-width: 0; width: calc(100% - 2 * var(--dsh-composer-side-clearance) - 4 * var(--dsh-composer-dock-inset)); max-width: calc(var(--dsh-composer-card-max-width) - 4 * var(--dsh-composer-dock-inset)); margin-inline: auto; overflow: hidden; border: .5px solid var(--dsw-alias-border-l1); border-radius: 12px; background: var(--dsw-specific-tip); color: var(--dsw-alias-label-primary); font-size: 13px; line-height: 20px; --dsh-scrollbar-thumb: var(--dsw-alias-scrollbar-bg-l2); --dsh-scrollbar-thumb-hover: var(--dsw-alias-scrollbar-hover-l2); }
+/* Use the native TodoPanel's dock geometry and bounded inline expansion. */
+.slop-chat-jobs-summary { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 3px 10px; border: 0; background: transparent; color: var(--dsw-alias-label-primary); text-align: left; cursor: pointer; font: inherit; }
+.slop-chat-jobs-summary:focus-visible, .slop-chat-jobs-body:focus-visible { outline: 2px solid var(--dsw-alias-state-business-primary); outline-offset: -2px; }
+.slop-chat-jobs-body { max-height: min(180px, 30dvh); margin: 0 6px 6px; padding: 0 4px; overflow: auto; overscroll-behavior: contain; }
+.slop-chat-jobs-body small { display: block; color: var(--dsw-alias-label-secondary); font-size: 11px; line-height: 16px; }
+.slop-chat-jobs-body p { margin: 4px 0; }
+.slop-chat-jobs-title { flex: none; font-size: 13px; font-weight: 500; line-height: 24px; }
+.slop-chat-jobs-progress { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--dsw-alias-label-tertiary); }
+.slop-chat-jobs-machines, .slop-chat-jobs-names { display: inline; }
+.slop-chat-jobs-icon { display: grid; place-items: center; flex: none; color: var(--dsw-alias-label-tertiary); }
+.slop-chat-jobs-summary:hover .slop-chat-jobs-icon { color: var(--dsw-alias-label-primary); }
+.slop-chat-chip:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.slop-chat-jobs-summary small { color: var(--dsw-alias-label-secondary); font-size: inherit; }
+.slop-chat-job-counts { display: flex; flex: none; flex-wrap: wrap; justify-content: flex-end; max-width: 55%; gap: 0 6px; line-height: 18px; white-space: nowrap; }
+.slop-chat-table-scroll { overflow-x: auto; }
+.slop-chat-job-table { border-collapse: collapse; width: 100%; font-size: 13px; line-height: 20px; }
+.slop-chat-job-table th { text-align: left; color: var(--dsw-alias-label-secondary); font-weight: 400; }
+.slop-chat-job-table td, .slop-chat-job-table th { padding: 3px 5px; border-bottom: 1px solid var(--dsw-alias-border-l2); vertical-align: top; }
+.slop-chat-job-table td:first-child { min-width: 110px; }
+.slop-chat-job-table :is(th, td):not(:first-child) { white-space: nowrap; overflow-wrap: normal; }
+.slop-chat-job-table button { border: 0; padding: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.slop-chat-observation { display: inline-flex; align-items: center; gap: 4px; }
+.slop-chat-observation button { min-width: 24px; min-height: 24px; text-align: center; border-radius: 4px; }
+.slop-chat-observation button:hover { background: var(--dsw-alias-bg-l2); }
+.slop-chat-observation button:disabled { cursor: wait; opacity: .5; }
+.slop-chat-job-evidence { border-top: 1px solid var(--dsw-alias-border-l2); padding-top: 4px; margin-top: 4px; }
+.slop-chat-job-evidence pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 160px; overflow: auto; font-size: 13px; line-height: 20px; }
+.slop-remote-shell { margin: 4px 0; color: var(--dsw-alias-label-primary); font-size: 13px; line-height: 20px; min-width: 0; }
+.slop-shell-summary { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.slop-shell-summary > span { flex: none; white-space: nowrap; }
+.slop-shell-preview { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slop-remote-shell pre { margin: 0; padding: 7px 10px; white-space: pre; overflow-wrap: normal; font: 13px/20px var(--ds-font-family-code); max-height: 300px; overflow: auto; }
+.slop-remote-shell .slop-shell-command { max-height: none; }
+.slop-remote-shell code { font: inherit; color: inherit; }
+.slop-remote-shell summary { padding: 4px 10px; cursor: pointer; color: var(--dsw-alias-label-secondary); }
+.slop-shell-workdir, .slop-shell-wait { display: block; padding: 5px 10px; color: var(--dsw-alias-label-secondary); }
+.slop-remote-shell p { padding: 0 10px; }
+.slop-shell-raw { border-top: 1px solid var(--dsw-alias-border-l2); }
+.slop-shell-inspect { border: 0; background: transparent; color: var(--dsw-alias-label-secondary); padding: 4px 10px; cursor: pointer; }
+@media (max-width: 600px) {
+  .slop-chat-jobs-machines, .slop-chat-jobs-names { display: none; }
+  .slop-chat-header-status { padding: 0 6px 2px; }
+  .slop-chat-job-table td, .slop-chat-job-table th { padding: 3px; }
+  .slop-chat-job-table td:first-child { min-width: 100px; }
+}
+@media (pointer: coarse) { .slop-chat-chip, .slop-chat-popover button { min-height: 32px; } }

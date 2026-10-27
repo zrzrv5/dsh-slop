@@ -1,0 +1,5 @@
+# Optional Node PTC memory. Per-call execution remains the default.
+# Pass --patch /absolute/path/to/ptc-memory.patch.yml to the launcher.
+- id: ptc-runtime
+  config:
+    executionMode: persistent-in-memory

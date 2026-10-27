@@ -1,0 +1,358 @@
+schema_version: 1
+requirements:
+  - id: SLOP-MACHINE-CHAT-SETUP
+    title: Setup is one interactive card in the current Chat and Connect continues the same Agent
+    owner_package: "@dsh-slop/plugin"
+    status: source-complete
+    implementation:
+      - file: packages/plugin/src/setup-command.ts
+        symbol: registerSetupMachineCommand
+      - file: packages/webui/src/SetupConversationCard.tsx
+        symbol: SetupMachineCard
+      - file: packages/webui/src/chat-presentation-definitions.ts
+        symbol: setupMachineSubmissionChatDefinition
+      - file: packages/plugin/src/machine-tools.ts
+        symbol: registerMachineTools
+    public_contracts:
+      - file: packages/webui/src/machine-setup-types.ts
+        symbol: SetupMachineCardValues
+      - file: packages/webui/src/machine-setup-draft.ts
+        symbol: formatSetupMachineChatSubmission
+    ui_surfaces:
+      - file: packages/webui/src/SetupConversationCard.tsx
+        label: Setup Machine card in the current Chat
+    tests:
+      - file: packages/plugin/tests/setup-command.spec.ts
+        title: starts an ordinary human turn so a setup session is not reused as blank
+      - file: packages/webui/tests/setup-conversation-card.test.tsx
+        title: submits one tagged structured message to the current Chat and becomes read-only
+      - file: packages/webui/tests/chat-presentation-definitions.test.ts
+        title: projects an exact tagged Setup submission without changing its user message
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-MACHINE-PROTECTED-SHELL
+    title: Machine owns revision-aware SSH, protected interactive authentication, and general remote shell
+    owner_package: "@dsh-slop/execution"
+    status: source-complete
+    implementation:
+      - file: packages/execution/src/machine-host.ts
+        symbol: createMachineHost
+      - file: packages/execution/src/connection-runtime.ts
+        symbol: MachineConnectionRuntime
+      - file: packages/execution/src/ssh-broker.ts
+        symbol: OpenSshBroker
+      - file: packages/execution/src/machine-service.ts
+        symbol: MachineService
+    public_contracts:
+      - file: packages/execution/src/machine-service.ts
+        symbol: MachineShellRequest
+      - file: packages/execution/src/types.ts
+        symbol: SshConnectionProfile
+    ui_surfaces:
+      - file: packages/webui/src/ChatPresentationCards.tsx
+        label: Protected Machine connection and authentication card
+    tests:
+      - file: packages/execution/tests/connection-runtime.spec.ts
+        title: keeps the exact Chat call pending through 2FA and resumes it after broker success
+      - file: packages/execution/tests/machine-service.spec.ts
+        title: isolates interleaved Machines, reuses each managed connection, and keeps a spaced key path as one argv value
+      - file: packages/plugin/tests/machine-tools.spec.ts
+        title: runs arbitrary remote shell only after the protected connection path and preserves raw output
+      - file: packages/webui/tests/chat-presentation-definitions.test.ts
+        title: keeps the same projection key across the incremental Machine shell lifecycle
+      - file: packages/plugin/tests/machine-tools.spec.ts
+        title: explains broken account startup when the marker never prints
+      - file: packages/execution/tests/wsl-socket-root.spec.ts
+        title: reports a WSL launch failure as missing WSL, not as a directory problem
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-MACHINE-INFO
+    title: Machine Info is approved read-only operational context with graded updates
+    owner_package: "@dsh-slop/core"
+    status: source-complete
+    implementation:
+      - file: packages/core/src/machine-info-service.ts
+        symbol: MachineInfoService
+      - file: packages/core/src/machine-application.ts
+        symbol: MachineApplication
+      - file: packages/webui/src/MachineInfoCard.tsx
+        symbol: MachineInfoCard
+    public_contracts:
+      - file: packages/core/src/machine-info.ts
+        symbol: machineInfoCandidateSchema
+      - file: packages/core/src/machine-info.ts
+        symbol: machineInfoChangeMateriality
+    ui_surfaces:
+      - file: packages/webui/src/MachineInfoCard.tsx
+        label: Read-only Machine Info Chat card
+    tests:
+      - file: packages/core/tests/machine-info-service.spec.ts
+        title: persists the complete approved context only with a digest-bound approval receipt
+      - file: packages/core/tests/machine-info-service.spec.ts
+        title: applies a small evidence-backed correction without approval and records its Chat explanation
+      - file: packages/core/tests/machine-info-service.spec.ts
+        title: rejects a material change until the user approves its exact revision and content
+      - file: packages/webui/tests/machine-info-card.test.tsx
+        title: is read-only and exposes setup details by expanding the existing disclosure control
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-MACHINE-TRANSFER
+    title: Machine copies one file or directory through Host-owned scp connections
+    owner_package: "@dsh-slop/execution"
+    status: source-complete
+    implementation:
+      - file: packages/execution/src/machine-transfer-service.ts
+        symbol: MachineTransferService
+      - file: packages/plugin/src/machine-tools.ts
+        symbol: registerMachineTools
+      - file: packages/plugin/src/transfer-progress.ts
+        symbol: TransferProgressHub
+    public_contracts:
+      - file: packages/execution/src/machine-transfer-service.ts
+        symbol: MachineTransferRequest
+      - file: docs/internals/machine.md
+        symbol: Connection reuse and shell
+    ui_surfaces:
+      - file: packages/webui/src/ChatPresentationCards.tsx
+        label: Native scp progress card
+    tests:
+      - file: packages/execution/tests/machine-transfer-service.spec.ts
+        title: uses scp -3 and two distinct control sockets for Machine-to-Machine transfer
+      - file: packages/plugin/tests/machine-tools.spec.ts
+        title: transfers between two Machines only after both protected connection paths are ready
+      - file: packages/webui/tests/chat-presentation-definitions.test.ts
+        title: renders carriage-return scp updates in place
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-QUEUE-ADAPTIVE-BATCHING
+    title: Queue uses walltime-aware deterministic probes with narrow Agent fallback
+    owner_package: "@dsh-slop/queue"
+    status: source-complete
+    implementation:
+      - file: packages/queue/src/scheduling.ts
+        symbol: nextCheckAfterObservation
+      - file: packages/queue/src/planner.ts
+        symbol: planQueueBatches
+      - file: packages/queue/src/service.ts
+        symbol: QueueService
+      - file: packages/plugin/src/queue-runtime.ts
+        symbol: DshQueueRuntime
+      - file: packages/plugin/src/queue-probe.ts
+        symbol: DshQueueProbe
+      - file: packages/plugin/src/queue-settings-bridge.ts
+        symbol: serveQueueSettingsBridge
+    public_contracts:
+      - file: packages/queue/src/types.ts
+        symbol: QueueQueryRequest
+      - file: packages/queue/src/types.ts
+        symbol: processHandleSchema
+      - file: packages/queue/src/types.ts
+        symbol: QueueProbePort
+      - file: packages/queue/src/types.ts
+        symbol: queueSettingsSchema
+    ui_surfaces:
+      - file: packages/webui/src/QueueSettings.tsx
+        label: Queue cadence, delivery, fallback, and per-item settings
+    tests:
+      - file: packages/queue/tests/scheduling.spec.ts
+        title: uses one quarter of the shorter expected duration and scheduler walltime
+      - file: packages/queue/tests/planner.spec.ts
+        title: batches deterministic probes across owners when target and observer match
+      - file: packages/queue/tests/service.spec.ts
+        title: falls back only for the item explicitly classified as ambiguous
+      - file: packages/plugin/tests/queue-probe.spec.ts
+        title: uses the new-job grace path without requesting agent fallback
+      - file: packages/webui/tests/queue-settings.test.tsx
+        title: saves a custom walltime cadence and an item override with revisions
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-QUEUE-WEBHOOK
+    title: Optional authenticated callbacks enrich Queue while Base polling and delivery remain independent
+    owner_package: "@dsh-slop/plugin"
+    status: source-complete
+    implementation:
+      - file: packages/plugin/src/queue-webhook.ts
+        symbol: QueueWebhook
+      - file: packages/plugin/src/queue-webhook-integration.ts
+        symbol: registerQueueWebhookIntegration
+      - file: packages/queue/src/service.ts
+        symbol: receiveCallback
+    public_contracts:
+      - file: packages/queue/src/callback.ts
+        symbol: queueCallbackEventSchema
+      - file: docs/internals/queue.md
+        symbol: Optional webhook acquisition
+    ui_surfaces:
+      - file: packages/webui/src/QueueWebhookSettings.tsx
+        label: Optional webhook configuration in Queue settings
+    tests:
+      - file: packages/plugin/tests/queue-webhook.spec.ts
+        title: authenticates only task events and preserves an early callback across Host restart and registration
+      - file: packages/plugin/tests/queue-webhook.spec.ts
+        title: adds and removes the optional tool and prompt through the released upstream registries
+      - file: packages/plugin/tests/queue-repeat-policy.spec.ts
+        title: exempts callback allocation while retaining upstream reminders for repeated reads
+      - file: packages/queue/tests/callback.spec.ts
+        title: verifies webhook terminal state, keeps retrying transport failures, and permits scheduler correction
+      - file: packages/webui/tests/queue-webhook-settings.test.tsx
+        title: saves an explicit token once, clears the input, and displays public-route verification separately
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-QUEUE-CHAT-DELIVERY
+    title: Queue captures relevant Chats from host context and retries exact targeted delivery
+    owner_package: "@dsh-slop/queue"
+    status: source-complete
+    implementation:
+      - file: packages/queue/src/sqlite-store.ts
+        symbol: SqliteQueueStore
+      - file: packages/queue/src/monitor.ts
+        symbol: QueueMonitor
+      - file: packages/plugin/src/queue-runtime.ts
+        symbol: deliver
+    public_contracts:
+      - file: packages/queue/src/types.ts
+        symbol: QueueSessionTarget
+      - file: packages/queue/src/types.ts
+        symbol: QueueDeliveryRequest
+    ui_surfaces:
+      - not_applicable: Delivery uses native DSH Chat follow-up or durable passive append
+    tests:
+      - file: packages/queue/tests/service.spec.ts
+        title: keeps failed delivery pending and retries with capped exponential backoff
+      - file: packages/queue/tests/monitor.spec.ts
+        title: keeps the single timer alive for a delivery retry after the task is terminal
+      - file: packages/plugin/tests/queue-runtime.spec.ts
+        title: cold-activates only the target Chat and uses followup for wake or durable append for passive notify
+      - file: packages/plugin/tests/queue-delivery.spec.ts
+        title: flushes passive notices before acknowledging delivery and retries without another append
+      - file: packages/plugin/tests/queue-delivery.spec.ts
+        title: wakes the owner once for a terminal prerequisite without a new user message
+      - file: packages/plugin/tests/native-inbox.spec.ts
+        title: restores a flushed pending input across native disposal and fresh persistence attachment, but respects subsequent user removal
+      - file: packages/queue/tests/purpose.spec.ts
+        title: keeps monitor passive and lets background delivery wake a continuation found by manual refresh
+      - file: packages/plugin/tests/queue-output.spec.ts
+        title: returns persisted continuation and verification state through every model-facing output
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+  - id: SLOP-PRODUCT-SCOPE
+    title: Product composition exposes Machine, Knowledge, and Queue over upstream Standard and Code
+    owner_package: "@dsh-slop/bundle"
+    status: source-complete
+    implementation:
+      - file: packages/bundle/cordis.patch.yml
+        symbol: agent-presets
+      - file: packages/plugin/src/index.ts
+        symbol: SlopHost
+      - file: packages/knowledge/src/index.ts
+        symbol: apply
+      - file: tests/product-composition.spec.ts
+        symbol: product composition contract
+    public_contracts:
+      - file: docs/internals/architecture.md
+        symbol: Public model tools
+      - file: README.md
+        symbol: The problem and the solution
+      - file: docs/internals/knowledge.md
+        symbol: Search and read
+    ui_surfaces:
+      - file: packages/webui/src/MachineSettings.tsx
+        label: Read-only Machine inventory
+      - file: packages/webui/src/KnowledgeSettings.tsx
+        label: Knowledge settings and source status
+    tests:
+      - file: tests/product-composition.spec.ts
+        title: ships no product persona and exposes exactly fourteen SLOP model tools
+      - file: tests/product-composition.spec.ts
+        title: ships generic prompts for onboarding, discovery, project work, and Queue tracking
+      - file: tests/cross-component-contract.spec.ts
+        title: recalls portable Knowledge, resolves the target Machine, and tracks the accepted submission
+    real_system_evidence:
+      required: false
+      owner: product-maintainers
+      status: not-required
+      receipts: []
+
+  - id: SLOP-AGENT-BEHAVIOR
+    title: SLOP prompt rules form one labeled block, and the Agent behavior preferences apply to new sessions only
+    owner_package: "@dsh-slop/runtime-base"
+    status: source-complete
+    implementation:
+      - file: packages/runtime-base/src/prompt-block.ts
+        symbol: registerSlopPromptBlock
+      - file: packages/runtime-base/src/behavior.ts
+        symbol: registerBehavior
+      - file: packages/runtime-base/src/behavior-catalog.ts
+        symbol: BEHAVIOR_TRAITS
+      - file: packages/runtime-base/src/index.ts
+        symbol: RuntimeConfig
+    public_contracts:
+      - file: docs/internals/runtime.md
+        symbol: Agent behavior and prompt block
+    ui_surfaces:
+      - file: packages/webui/src/BehaviorSettings.tsx
+        label: Behavior tab of the DSH-SLOP settings section with presets, editable prompt text and the new-session notice
+    tests:
+      - file: packages/runtime-base/tests/prompt-block.spec.ts
+        title: collects capability sections into one labeled block after the harness sections
+      - file: packages/runtime-base/tests/prompt-block.spec.ts
+        title: keeps the behavior section last, after the Goal rules, and adds nothing when no rule is registered
+      - file: packages/runtime-base/tests/behavior-catalog.spec.ts
+        title: builds every preset from existing levels and matches Balanced to the defaults
+      - file: packages/runtime-base/tests/behavior-catalog.spec.ts
+        title: renders the preamble and then one paragraph per trait in catalog order
+      - file: packages/plugin/tests/behavior.spec.ts
+        title: gives each Agent the behavior selected when it starts and leaves running Agents unchanged
+      - file: packages/plugin/tests/behavior.spec.ts
+        title: uses an override only for the selected level it names and ignores unknown or empty entries
+      - file: packages/plugin/tests/behavior.spec.ts
+        title: falls back to the trait default for an unknown stored level
+      - file: packages/plugin/tests/behavior.spec.ts
+        title: keeps every default text free of approval bypass wording
+      - file: packages/webui/tests/behavior-settings.test.tsx
+        title: saves against the revision it read and confirms the new-session timing
+    real_system_evidence:
+      required: true
+      owner: release-engineering
+      status: pending
+      receipts: []
+
+release_gates:
+  - id: SLOP-REAL-CHAT-JOURNEY
+    title: Real Chat setup, protected SSH or 2FA, discovery, and Machine Info approval
+    owner: release-engineering
+    status: pending
+    receipts: []
+  - id: SLOP-REAL-QUEUE-RECOVERY
+    title: Real local and remote Queue packed checks plus relevant stopped-Chat activation
+    owner: release-engineering
+    status: pending
+    receipts: []

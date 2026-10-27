@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Standalone Web runtime",
+    "description": "Native Worktrees and plugin discovery for standalone DSH-SLOP."
+  }
+}

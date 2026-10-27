@@ -1,0 +1,44 @@
+# DSH-SLOP is an additive Machine, Knowledge, and Queue layer over upstream DSH.
+# Standard and Code retain their native shell, filesystem, jobs, skills,
+# planning, and subagent capabilities; SLOP tools are registered host-global.
+
+- id: agent-presets
+  disabled: false
+  config:
+    default: standard
+
+- id: jobs
+  disabled: false
+
+- id: tool-jobs
+  disabled: false
+
+- id: ui-jobs
+  disabled: false
+
+# Keep DSH's authoritative Skill filesystem provider host-global. The
+# model-facing tool-skill row remains preset-scoped.
+- id: skill-filesystem
+  disabled: false
+
+# Each prepare allocates a distinct execution lease even with identical target
+# arguments. Keep the advisory repeat detector enabled for all other tools.
+- id: repeat-tool-reminder
+  config:
+    exclude: [slop_queue_prepare]
+
+- insert:
+    - id: slop-runtime
+      name: '@dsh-slop/runtime'
+      inject: [webStartup]
+      config:
+        trustedBrowserHosts: !!js ctx.webStartup.trustedHosts
+    - id: slop-machine
+      name: '@dsh-slop/machine'
+    - id: slop-knowledge
+      name: '@dsh-slop/knowledge'
+    - id: slop-queue
+      name: '@dsh-slop/queue-plugin'
+    - id: slop-queue-callbacks
+      name: '@dsh-slop/queue-webhook'
+      disabled: true

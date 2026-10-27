@@ -1,0 +1,31 @@
+{
+  "name": "@dsh-slop/execution",
+  "version": "0.0.1",
+  "description": "Reusable SSH, protected authentication, and generic remote shell for dsh-slop-machine",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run tests"
+  },
+  "dependencies": {
+    "@dsh-slop/core": "workspace:*",
+    "@dsh-slop/operations": "workspace:*",
+    "ssh2": "1.17.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-subprocess": "0.2.1-rc.3"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-subprocess": "0.2.1-rc.3",
+    "@types/ssh2": "1.15.6"
+  }
+}
